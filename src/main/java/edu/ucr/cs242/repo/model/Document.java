@@ -2,19 +2,19 @@ package edu.ucr.cs242.repo.model;
 
 import org.springframework.data.annotation.Id;
 
-public class Document {
+public class Document implements Comparable<Document> {
 	@Id
-	private String docID;
+	private String docId;
 	private double score;
-	private long position;
+	private long positions[];
 	private String preview;
 
-	public String getDocID() {
-		return docID;
+	public String getDocId() {
+		return docId;
 	}
 
-	public void setDocID(String docID) {
-		this.docID = docID;
+	public void setDocId(String docId) {
+		this.docId = docId;
 	}
 
 	public double getScore() {
@@ -25,12 +25,12 @@ public class Document {
 		this.score = score;
 	}
 
-	public long getPosition() {
-		return position;
+	public long[] getPositions() {
+		return positions;
 	}
 
-	public void setPosition(long position) {
-		this.position = position;
+	public void setPositions(long[] positions) {
+		this.positions = positions;
 	}
 
 	public String getPreview() {
@@ -40,5 +40,14 @@ public class Document {
 	public void setPreview(String preview) {
 		this.preview = preview;
 	}
-	
+
+	@Override
+	public int compareTo(Document d2) {
+		if (score < d2.score)
+			return 1;
+		else if (score > d2.score)
+			return -1;
+		return 0;
+	}
+
 }

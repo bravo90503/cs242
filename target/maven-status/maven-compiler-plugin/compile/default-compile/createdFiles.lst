@@ -1,0 +1,8 @@
+edu/ucr/cs242/repo/KeywordRepository.class
+edu/ucr/cs242/MongoConfig.class
+edu/ucr/cs242/repo/model/User.class
+edu/ucr/cs242/repo/UserRepository.class
+edu/ucr/cs242/Application.class
+edu/ucr/cs242/repo/model/Keyword.class
+edu/ucr/cs242/web/SimpleController.class
+edu/ucr/cs242/repo/model/Document.class

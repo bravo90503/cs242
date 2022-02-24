@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content-width="device-width" , initial-scale="1.0">
+<title>Search Engine</title>
+<link rel="stylesheet" href="main.css">
+</head>
+<body class="main-theme">
+	userId:
+	<span class="user" th:text="${userId}"></span>
+
+	<p>
+	<div th:if="!${userId}" class="user">Not found.</div>
+    <p>
+	<div>
+		<a href="/find">Find another user</a>
+	</div>
+	
+	<div>
+		<a href="/insert">Add a user</a>
+	</div>
+
+</body>
+</html>
