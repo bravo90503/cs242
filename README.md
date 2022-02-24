@@ -1,5 +1,3 @@
-cs242 mapreduce final project
-
-# cs242
-# cs242
-# cs242
+cs242 
+# final project
+# webserver to search for documents via a query form
