@@ -1,3 +1,3 @@
 cs242 
 # final project
-# webserver hosting executable
+# webserver to search for documents via a query form
