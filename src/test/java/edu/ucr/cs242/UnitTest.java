@@ -119,7 +119,7 @@ public class UnitTest {
 					continue;
 				}
 				
-				Assert.assertTrue(maxScore > document.getScore());
+				Assert.assertTrue(maxScore >= document.getScore());
 			}
 
 		} catch (
