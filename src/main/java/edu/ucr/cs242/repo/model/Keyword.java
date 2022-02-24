@@ -1,6 +1,6 @@
 package edu.ucr.cs242.repo.model;
 
-import java.util.SortedSet;
+import java.util.PriorityQueue;
 
 import org.springframework.data.annotation.Id;
 
@@ -8,7 +8,7 @@ public class Keyword {
 	@Id
 	private String key;
     private long frequency;
-	private SortedSet<Document> documents;
+	private PriorityQueue<Document> documents;
 
 	public String getKey() {
 		return key;
@@ -26,11 +26,11 @@ public class Keyword {
 		this.frequency = frequency;
 	}
 
-	public SortedSet<Document> getDocuments() {
+	public PriorityQueue<Document> getDocuments() {
 		return documents;
 	}
 
-	public void setDocuments(SortedSet<Document> documents) {
+	public void setDocuments(PriorityQueue<Document> documents) {
 		this.documents = documents;
 	}
 

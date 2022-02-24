@@ -111,6 +111,7 @@ public class UnitTest {
 			Keyword keyword = mapper.readValue(documents.toString(), Keyword.class);
 			keyword.setKey(keysb.toString());
 			Double maxScore = null;
+			Assert.assertTrue(keyword.getDocuments().size() == 3);
 			for (Document document : keyword.getDocuments()) {
 				System.out.println("docId="+document.getDocId() + ", score=" +document.getScore());
 				if (maxScore == null) {
