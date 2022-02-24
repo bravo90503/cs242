@@ -1,2 +1,2 @@
 cs242 
-# apreduce final project
+# mapreduce final project
