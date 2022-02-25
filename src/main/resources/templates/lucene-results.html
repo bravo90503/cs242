@@ -15,13 +15,15 @@
 			<table class="table">
 				<thead>
 					<tr>
-						<th>Doc Id</th>
-						<th>Doc url</th>
-						<th>Doc Preview</th>
+					   <th scope="col">#</th>
+						<th scope="col" class="col-1">Doc Id</th>
+						<th scope="col">Doc url</th>
+						<th scope="col">Doc Preview</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="document : ${documents}" >
+					<tr th:each="document, iter : ${documents}" >
+					    <th scope="row" th:text="${iter.index + 1}"></th>
 						<td><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
 						<td th:text="${document.url}"></td>
 						<td th:text="${document.preview}"></td>
