@@ -16,9 +16,9 @@ import edu.ucr.cs242.repo.model.User;
 @Controller
 public class SimpleController {
 	@Autowired
-	UserRepository userRepository;
+	private UserRepository userRepository;
 	@Value("${spring.application.name}")
-	String appName;
+	private String appName;
 
 	@GetMapping("/")
 	public String homePage(Model model) {

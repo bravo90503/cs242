@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content-width="device-width" , initial-scale="1.0">
+<title>Search Engine</title>
+<link rel="stylesheet" href="main.css">
+</head>
+<body class="main-theme">
+	<form action="#" th:action="@{/lucene/search}" th:object="${search}"
+		method="post">
+		<label for="content">content</label> <input type="text"
+			th:field="*{content}" id="content" placeholder="content"> <br />
+		<label for="howMany">how many</label><input type="text" th:field="*{howMany}" id="howMany"
+			placeholder="howMany"> <br /> <input type="submit"
+			value="Find Docs">
+	</form>
+</body>
+</html>
