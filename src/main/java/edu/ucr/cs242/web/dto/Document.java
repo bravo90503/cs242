@@ -36,5 +36,9 @@ public class Document {
 	public void setUrl(String url) {
 		this.url = url;
 	}
+	
+	public String getShortId() {
+		return this.id.substring(0, this.id.indexOf("_"));
+	}
 
 }

@@ -5,9 +5,10 @@
 <meta name="viewport" content-width="device-width" , initial-scale="1.0">
 <title>Search Engine</title>
 <link rel="stylesheet" href="main.css">
+<link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 </head>
 <body class="main-theme">
-	<div class="container">
+	<div class="container-fluid .pt-10">
 		<div class="row">
 			<h1>Lucene Search Results</h1>
 
@@ -21,14 +22,13 @@
 				</thead>
 				<tbody>
 					<tr th:each="document : ${documents}" >
-						<td><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.id}"></span></a></td>
+						<td><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
 						<td th:text="${document.url}"></td>
 						<td th:text="${document.preview}"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
-
 	</div>
 </body>
 </html>
