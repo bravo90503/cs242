@@ -14,9 +14,9 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.ucr.cs242.service.LuceneSearch;
@@ -71,8 +71,8 @@ public class LuceneSearchController {
 		return "lucene-results";
 	}
 
-	@GetMapping(value = "/documents", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-	public @ResponseBody byte[] getFile(@RequestParam String id) throws IOException {
+	@GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
 		InputStream in = getClass().getResourceAsStream("/lucene/documents/" + id);
 		return IOUtils.toByteArray(in);
 	}
