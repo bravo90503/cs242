@@ -20,8 +20,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="document : ${documents}">
-						<td th:text="${document.id}"></td>
+					<tr th:each="document : ${documents}" >
+						<td><a th:href="@{/lucene/documents?id={id}(id=${document.id})}"><span th:text="${document.id}"></span></a></td>
 						<td th:text="${document.url}"></td>
 						<td th:text="${document.preview}"></td>
 					</tr>

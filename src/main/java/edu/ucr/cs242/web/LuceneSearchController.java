@@ -1,17 +1,23 @@
 package edu.ucr.cs242.web;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.ucr.cs242.service.LuceneSearch;
 import edu.ucr.cs242.web.dto.LuceneQuery;
@@ -63,5 +69,11 @@ public class LuceneSearchController {
 		}
 
 		return "lucene-results";
+	}
+
+	@GetMapping(value = "/documents", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
+	public @ResponseBody byte[] getFile(@RequestParam String id) throws IOException {
+		InputStream in = getClass().getResourceAsStream("/lucene/documents/" + id);
+		return IOUtils.toByteArray(in);
 	}
 }
