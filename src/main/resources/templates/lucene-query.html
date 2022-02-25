@@ -5,15 +5,28 @@
 <meta name="viewport" content-width="device-width" , initial-scale="1.0">
 <title>Search Engine</title>
 <link rel="stylesheet" href="main.css">
+<link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
 </head>
 <body class="main-theme">
-	<form action="#" th:action="@{/lucene/search}" th:object="${search}"
-		method="post">
-		<label for="content">content</label> <input type="text"
-			th:field="*{content}" id="content" placeholder="content"> <br />
-		<label for="howMany">how many</label> <input type="text" th:field="*{howMany}" id="howMany"
-			placeholder="howMany"> <br /> <input type="submit"
-			value="Find Docs">
-	</form>
+	<div class="container">
+	  <h2>Lucene Search Query Form</h2>
+		<form action="#" th:action="@{/lucene/search}" th:object="${search}"
+			method="post">
+			<div class="form-group">
+				<label for="content">Keyword(s):</label> 
+				<input class="form-control" type="text" th:field="*{content}" id="content" placeholder="Enter keyword(s)">
+			</div>
+			<div class="form-group">
+				<label for="howMany">How Many:</label> 
+				<input class="form-control" type="text" th:field="*{howMany}" id="howMany" placeholder="Enter how many documents to return">
+
+			</div>
+			<div class="form-group">
+				<button class="btn btn-default" type="submit">Submit</button>
+			</div>
+
+		</form>
+	</div>
 </body>
 </html>
