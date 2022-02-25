@@ -36,7 +36,7 @@ public class LuceneSearchController {
 	@PostMapping("/search")
 	public String search(Model model, LuceneQuery query) {
 		try {
-			int counter = 1;
+			int counter = 0;
 			int howMany = query.getHowMany();
 			String content = query.getContent();
 
