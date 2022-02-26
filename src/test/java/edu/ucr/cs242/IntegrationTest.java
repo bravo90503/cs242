@@ -3,6 +3,7 @@ package edu.ucr.cs242;
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,49 @@ public class IntegrationTest {
 
 		Assert.assertTrue(user.isPresent());
 		Assert.assertTrue(user.get().getId().equals("cynthia"));
+
+	}
+	
+	@Test
+	@Order(1)
+	public void addUser() {
+
+		User user = new User();
+		user.setId("luis");
+		user.setPassword("password");
+		
+		userRepo.save(user);
+
+	}
+	
+	@Test
+	@Order(2)
+	public void updateUser() {
+
+		User user = new User();
+		user.setId("luis");
+		user.setPassword("password2");
+		
+		userRepo.save(user);
+
+	}
+	
+    @Test
+	@Order(3)
+	public void deleteUser() {
+		
+		Optional<User> user = userRepo.findById("luis");
+
+		Assert.assertTrue(user.isPresent());
+		User luis = user.get();
+		
+		
+		userRepo.delete(luis);
+		
+		
+		Optional<User> findUser = userRepo.findById("luis");
+		// assert luis no longer in db
+		Assert.assertFalse(findUser.isPresent());
 
 	}
 
