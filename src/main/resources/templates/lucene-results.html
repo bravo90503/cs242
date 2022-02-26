@@ -6,6 +6,14 @@
 <title>Search Engine</title>
 <link rel="stylesheet" href="main.css">
 <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+<style>
+.max-td {
+  max-width:600px; /* Customise it accordingly */
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+</style>
 </head>
 <body class="main-theme">
 	<div class="container-fluid pt-10">
@@ -16,7 +24,7 @@
 				<thead>
 					<tr>
 					   <th scope="col">#</th>
-						<th scope="col" class="col-1">Doc Id</th>
+						<th scope="col">Doc Id</th>
 						<th scope="col">Doc url</th>
 						<th scope="col">Doc Preview</th>
 					</tr>
@@ -24,9 +32,9 @@
 				<tbody>
 					<tr th:each="document, iter : ${documents}" >
 					    <th scope="row" th:text="${iter.index + 1}"></th>
-						<td><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
-						<td th:text="${document.url}"></td>
-						<td th:text="${document.preview}"></td>
+						<td class="col-1"><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
+						<td class="max-td"><span th:text="${document.url}"></span></td>
+						<td class="col-10" th:text="${document.preview}"></td>
 					</tr>
 				</tbody>
 			</table>
