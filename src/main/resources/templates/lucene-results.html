@@ -33,7 +33,7 @@
 					<tr th:each="document, iter : ${documents}" >
 					    <th scope="row" th:text="${iter.index + 1}"></th>
 						<td class="col-1"><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
-						<td class="max-td"><span th:text="${document.url}"></span></td>
+						<td class="max-td"><a th:href="${document.url}" target="_blank" rel="noopener"><span th:text="${document.url}"></span></a></td>
 						<td class="col-10" th:text="${document.preview}"></td>
 					</tr>
 				</tbody>
