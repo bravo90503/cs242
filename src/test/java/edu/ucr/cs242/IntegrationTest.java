@@ -3,8 +3,10 @@ package edu.ucr.cs242;
 import java.util.Optional;
 
 import org.junit.Assert;
+import org.junit.jupiter.api.MethodOrderer.OrderAnnotation;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -23,6 +25,7 @@ import edu.ucr.cs242.repo.model.User;
 @SpringBootTest(classes = Application.class)
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
+@TestMethodOrder(OrderAnnotation.class)
 public class IntegrationTest {
 	@Autowired
 	UserRepository userRepo;
@@ -64,24 +67,39 @@ public class IntegrationTest {
 		user.setId("luis");
 		user.setPassword("password2");
 		
+		// sees luis is already in db and updates rather than insert a new record
 		userRepo.save(user);
 
 	}
 	
-    @Test
+	@Test
 	@Order(3)
-	public void deleteUser() {
+	public void updateUserAnotherWay() {
+
+		Optional<User> user = userRepo.findById("luis");
+		Assert.assertTrue(user.isPresent());
+		User luis = user.get();
+		luis.setPassword("password3");
 		
+		userRepo.save(luis);
+	}
+	
+    @Test
+	@Order(4)
+	public void deleteUser() throws InterruptedException {
 		Optional<User> user = userRepo.findById("luis");
 
 		Assert.assertTrue(user.isPresent());
 		User luis = user.get();
-		
+		// let's make sure our last update order(3) actually worked
+		Assert.assertTrue(luis.getPassword().equals("password3"));
 		
 		userRepo.delete(luis);
 		
 		
 		Optional<User> findUser = userRepo.findById("luis");
+
+		
 		// assert luis no longer in db
 		Assert.assertFalse(findUser.isPresent());
 
