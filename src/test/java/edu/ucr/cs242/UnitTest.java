@@ -116,6 +116,13 @@ public class UnitTest {
 
 				Assert.assertTrue(maxScore >= document.getScore());
 			}
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println("------------------------------------------------------------------------------------------");
+			System.out.println();
+			System.out.println();
+			System.out.println();
 			
 			Keyword retrievalKeyword = mapper.readValue(retrievals.toString(), Keyword.class);
 			retrievalKeyword.setKey(information.toString());
