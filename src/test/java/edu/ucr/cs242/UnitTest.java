@@ -96,7 +96,7 @@ public class UnitTest {
 
 				int beginIndex = line.indexOf("{");
 				String key = line.substring(0, beginIndex).trim();
-				if (StringUtils.isNotBlank(key) && key.equals("and")) {
+				if (StringUtils.isNotBlank(key) && key.equals("information")) {
 					keysb.append(key); // appends line to string buffer
 					documents.append(line.substring(beginIndex, line.length()));
 
@@ -111,12 +111,12 @@ public class UnitTest {
 			Keyword keyword = mapper.readValue(documents.toString(), Keyword.class);
 			keyword.setKey(keysb.toString());
 			Double maxScore = null;
-			Assert.assertTrue(keyword.getDocuments().size() == 3);
+			Assert.assertTrue(String.format("expected 1001, got %d", keyword.getDocuments().size()), keyword.getDocuments().size() == 1001);
 			for (Document document : keyword.getDocuments()) {
 				System.out.println("docId="+document.getDocId() + ", score=" +document.getScore());
 				if (maxScore == null) {
 					maxScore = new Double(document.getScore());
-					continue;
+					//continue;
 				}
 				
 				Assert.assertTrue(maxScore >= document.getScore());
