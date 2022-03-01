@@ -3,30 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content-width="device-width", initial-scale="1.0">
-    <title>Search Engine</title>
+    <title>Advanced Search Engine</title>
     <link rel="stylesheet" href="main.css">
 </head>
 <body class="main-theme">
     <!--Main title heading-->
-    <center><h1>Welcome to Group 2's search engine!</h1></center>
+    <center><h1>Advanced search engine options - Group 2</h1></center>
     <center>
     <form action="/url" method="GET">
         <p>Please enter your search below:</p>
         <input type="text" placeholder="Search">
+        <br><br>
+		<input type="checkbox" id="vehicle1" name="vehicle1" value="keyword">
+		<label for="vehicle1">Keyword</label><br>
+		<input type="checkbox" id="vehicle2" name="vehicle2" value="full search">
+		<label for="vehicle2">Full Search</label><br>
+		<input type="checkbox" id="vehicle3" name="vehicle3" value="partial search">
+		<label for="vehicle3">Partial Search</label><br><br>
     </form>
     </center>
     <br>
     <center><button type="button">Find matches!</button></center>
-    <center><a href="advanced.html">Advanced</a></center>
     <script src="interact_web.js"></script>
     <noscript>You need to enable Javascript to view the full site.</noscript>
-    <center>
-    <p>
-    Try MONGO <a href="find.html">click here</a> 
-    
-        <p>
-    Try LUCENE <a href="lucene-query.html">click here</a> 
-    </center>
-    <br>
 </body>
 </html>
