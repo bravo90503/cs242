@@ -36,6 +36,7 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 public class HadoopSearch {
 	private static ObjectMapper mapper = new ObjectMapper();
 	public static Map<String, String> URLS_MAP = new HashMap<>();
+	private Map<String, Keyword> keywordsMap = new HashMap<>();
 
 	@PostConstruct
 	private void loadUrls() throws IOException, NoSuchAlgorithmException {
@@ -75,40 +76,48 @@ public class HadoopSearch {
 	}
 
 	public List<Keyword> getKeywords(String[] tokens) throws IOException {
+		List<Keyword> keywords = new ArrayList<>();
 		Map<String, String> tokenMap = new HashMap<>();
 		for (String token : tokens) {
-			tokenMap.put(token, token);
-		}
-		File file = ResourceUtils.getFile("classpath:" + "part-r-00000.gz");
-		FileInputStream stream = new FileInputStream(file); // creates a new file
-		// instance
-		GZIPInputStream gzipstream = new GZIPInputStream(stream);
-		Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
-		BufferedReader buffered = new BufferedReader(decoder);
-		StringBuilder[] keys = new StringBuilder[tokens.length];
-		StringBuilder[] docs = new StringBuilder[tokens.length];
-		String line;
-		int index = 0;
-		while ((line = buffered.readLine()) != null) {
-			int beginIndex = line.indexOf("{");
-			String key = line.substring(0, beginIndex).trim();
-			if (StringUtils.isNotBlank(key) && tokenMap.get(key) != null) {
-				StringBuilder keysb = new StringBuilder();
-				StringBuilder doc = new StringBuilder();
-				keysb.append(key); // appends line to string buffer
-				doc.append(line.substring(beginIndex, line.length()));
-				keys[index] = keysb;
-				docs[index] = doc;
-				index++;
+			Keyword keyword;
+			if ((keyword = keywordsMap.get(token)) == null) {
+				tokenMap.put(token, token);
+			} else {
+				keywords.add(keyword);
 			}
 		}
-		buffered.close(); // closes the stream and release the resources
+		if (!tokenMap.isEmpty()) {
+			File file = ResourceUtils.getFile("classpath:" + "part-r-00000.gz");
+			FileInputStream stream = new FileInputStream(file); // creates a new file
+			// instance
+			GZIPInputStream gzipstream = new GZIPInputStream(stream);
+			Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
+			BufferedReader buffered = new BufferedReader(decoder);
+			StringBuilder[] keys = new StringBuilder[tokens.length];
+			StringBuilder[] docs = new StringBuilder[tokens.length];
+			String line;
+			int index = 0;
+			while ((line = buffered.readLine()) != null) {
+				int beginIndex = line.indexOf("{");
+				String key = line.substring(0, beginIndex).trim();
+				if (StringUtils.isNotBlank(key) && tokenMap.get(key) != null) {
+					StringBuilder keysb = new StringBuilder();
+					StringBuilder doc = new StringBuilder();
+					keysb.append(key); // appends line to string buffer
+					doc.append(line.substring(beginIndex, line.length()));
+					keys[index] = keysb;
+					docs[index] = doc;
+					index++;
+				}
+			}
+			buffered.close(); // closes the stream and release the resources
 
-		List<Keyword> keywords = new ArrayList<>(keys.length);
-		for (int i = 0; i < keys.length; i++) {
-			Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
-			keyword.setKey(keys[i].toString());
-			keywords.add(keyword);
+			for (int i = 0; i < keys.length; i++) {
+				Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
+				keyword.setKey(keys[i].toString());
+				keywords.add(keyword);
+				keywordsMap.put(keys[i].toString(), keyword);
+			}
 		}
 
 		return keywords;
@@ -123,7 +132,7 @@ public class HadoopSearch {
 			// next iteration documents
 			int i = 0;
 			for (Keyword keyword : keywords) {
-				Document document = keyword.getDocuments().poll();
+				Document document = keyword.getDocuments().get(iteration);
 				if (document == null) {
 					done = true;
 					break;
