@@ -21,9 +21,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import edu.ucr.cs242.repo.model.Document;
 import edu.ucr.cs242.repo.model.Keyword;
+import edu.ucr.cs242.service.HadoopSearch;
 import edu.ucr.cs242.web.dto.DocumentDto;
 
 public class UnitTest {
+    HadoopSearch hadoopSearchService = new HadoopSearch();
 
 	private static ObjectMapper mapper = new ObjectMapper();
 
@@ -167,7 +169,7 @@ public class UnitTest {
 					break;
 				}
 
-				rankDocuments(iterationDocs, Q, topDocs);
+				hadoopSearchService.rankDocuments(iterationDocs, Q, topDocs);
 
 				if (topDocs.size() >= howMany) {
 					break;
@@ -191,52 +193,6 @@ public class UnitTest {
 		IOException e) {
 			e.printStackTrace();
 		}
-	}
-
-	private void rankDocuments(List<Document> iDocs, Map<String, DocumentDto> cache,
-			PriorityQueue<DocumentDto> topDocs) {
-
-		// cache and set lower bounds for indices
-		int k = 0;
-		int length = iDocs.size();
-		for (Document iDoc : iDocs) {
-			DocumentDto cached = cache.get(iDoc.getDocId());
-			if (cached == null) {
-				cached = new DocumentDto();
-				cached.setId(iDoc.getDocId());
-				cached.setMin(iDoc.getScore());
-				double mins[] = new double[length];
-				mins[k] = iDoc.getScore();
-				cached.setMins(mins);
-				cache.put(iDoc.getDocId(), cached);
-			} else {
-				cached.getMins()[k] = iDoc.getScore();
-			}
-			k++;
-		}
-
-		// finalize lower and upper bounds for buffered items
-		List<String> topDocsIds = new ArrayList<>();
-		for (DocumentDto cached : cache.values()) {
-			double lowerBound = 0.0;
-			double upperBound = 0.0;
-			for (int i = 0; i < length; i++) {
-				lowerBound += cached.getMins()[i];
-				upperBound += iDocs.get(i).getScore();
-			}
-			cached.setMin(lowerBound);
-			cached.setMax(upperBound);
-
-			if (lowerBound >= upperBound) {
-				topDocsIds.add(cached.getId());
-			}
-		}
-
-		for (String id : topDocsIds) {
-			topDocs.add(cache.get(id));
-			cache.remove(id);
-		}
-
 	}
 
 }
