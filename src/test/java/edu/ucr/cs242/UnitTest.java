@@ -7,9 +7,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.zip.GZIPInputStream;
 
@@ -25,7 +23,7 @@ import edu.ucr.cs242.service.HadoopSearch;
 import edu.ucr.cs242.web.dto.DocumentDto;
 
 public class UnitTest {
-    HadoopSearch hadoopSearchService = new HadoopSearch();
+	HadoopSearch hadoopSearchService = new HadoopSearch();
 
 	private static ObjectMapper mapper = new ObjectMapper();
 
@@ -142,47 +140,21 @@ public class UnitTest {
 				Assert.assertTrue(maxScore >= document.getScore());
 			}
 
+			// documents to return
 			int howMany = 320;
-			int iteration = 1;
 
 			// keywords
 			List<Keyword> keywords = new ArrayList<>();
 			keywords.add(informationKeyword);
 			keywords.add(retrievalKeyword);
 
+			// sorted by highest score
 			PriorityQueue<DocumentDto> topDocs = new PriorityQueue<>();
-			List<Document> iterationDocs = new ArrayList<Document>();
-			Map<String, DocumentDto> Q = new LinkedHashMap<>();
-			boolean done = false;
-			for (;;) {
-				// next iteration documents
-				for (Keyword keyword : keywords) {
-					Document document = keyword.getDocuments().poll();
-					if (document == null) {
-						done = true;
-						break;
-					}
-					iterationDocs.add(document);
-				}
 
-				if (done) {
-					break;
-				}
-
-				hadoopSearchService.rankDocuments(iterationDocs, Q, topDocs);
-
-				if (topDocs.size() >= howMany) {
-					break;
-				}
-
-				iteration++;
-				iterationDocs.clear();
-			}
-
+			int iteration = hadoopSearchService.findTopDocuments(keywords, howMany, topDocs);
 			int index = 0;
 			DocumentDto poll;
 			while ((poll = topDocs.poll()) != null) {
-
 				System.out.println("#" + ++index + " : score= " + poll.getMin() + " : id= " + poll.getId());
 			}
 
