@@ -181,7 +181,7 @@ public class UnitTest {
 			DocumentDto poll;
 			while ((poll = topDocs.poll()) != null) {
 
-				System.out.println("#" + ++index + " : score= " + poll.getMax() + " : id= " + poll.getId());
+				System.out.println("#" + ++index + " : score= " + poll.getMin() + " : id= " + poll.getId());
 			}
 
 			System.out.println("iterations=" + iteration);

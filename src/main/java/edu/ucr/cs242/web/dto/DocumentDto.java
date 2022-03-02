@@ -80,16 +80,16 @@ public class DocumentDto implements Comparable<DocumentDto> {
 
 	@Override
 	public int compareTo(DocumentDto d2) {
-		if (max < d2.max)
+		if (min < d2.min)
 			return 1;
-		else if (max > d2.max)
+		else if (min > d2.min)
 			return -1;
 		return 0;
 	}
 
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append("id=").append(id).append(";score=").append(max);
+		sb.append("id=").append(id).append(";score=").append(min);
 
 		return sb.toString();
 	}
