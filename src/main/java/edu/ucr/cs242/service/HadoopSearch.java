@@ -157,6 +157,18 @@ public class HadoopSearch {
 		return iteration;
 	}
 
+	/**
+	 * <p>
+	 * Uses NRA to rank documents.
+	 * </p>
+	 * 
+	 * @param iDocs   per-round documents, one document for every keyword
+	 * @param CACHE   buffer to keep track of visited documents
+	 * @param topDocs list to put top documents in
+	 * @return nothing, uses topDocs in param to put results in
+	 * @see <a href="http://www-db.deis.unibo.it/courses/SI-M/slides/01.2.TopK.advanced1.pdf">Top-k queries</a>
+	 * @since 1.0
+	 */
 	public void rankDocuments(Document[] iDocs, Map<String, DocumentDto> CACHE, PriorityQueue<DocumentDto> topDocs) {
 		// cache incoming docs, set lowerbounds on their respective indices
 		int k = 0;
