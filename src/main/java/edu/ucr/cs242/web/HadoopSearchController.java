@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.PriorityQueue;
 
 import org.apache.commons.io.IOUtils;
@@ -43,11 +44,21 @@ public class HadoopSearchController {
 
 	@PostMapping("/search")
 	public String search(Model model, HadoopQuery query) {
+		Map<String, String> urlsMap = HadoopSearch.URLS_MAP;
 		try {
 			int howMany = query.getHowMany();
 			String content = query.getContent();
-
-			PriorityQueue<DocumentDto> documents = hadoopSearchService.searchByContent(content, howMany);
+            
+			PriorityQueue<DocumentDto> docs = hadoopSearchService.searchByContent(content, howMany);
+			List<DocumentDto> documents = new ArrayList<>();
+			DocumentDto sortedDoc;
+			while ((sortedDoc = docs.poll()) != null)  {
+				documents.add(sortedDoc);
+				String[] split = sortedDoc.getId().split("_");
+				String[] keys = split[1].split("\\.");
+				String url = urlsMap.get(keys[0]);
+				sortedDoc.setUrl(url);
+			}
 
 			model.addAttribute("documents", documents);
 		} catch (Exception e) {
@@ -60,7 +71,7 @@ public class HadoopSearchController {
 
 	@GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-		InputStream in = getClass().getResourceAsStream("/lucene/documents/" + id);
+		InputStream in = getClass().getResourceAsStream("/documents/" + id);
 		return IOUtils.toByteArray(in);
 	}
 }

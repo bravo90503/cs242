@@ -3,16 +3,24 @@ package edu.ucr.cs242.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.zip.GZIPInputStream;
+
+import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
@@ -26,8 +34,32 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 
 @Service
 public class HadoopSearch {
-
 	private static ObjectMapper mapper = new ObjectMapper();
+	public static Map<String, String> URLS_MAP = new HashMap<>();
+
+	@PostConstruct
+	private void loadUrls() throws IOException, NoSuchAlgorithmException {
+		BufferedReader br = null;
+		try {
+			MessageDigest DIGEST = MessageDigest.getInstance("SHA-256");
+			File file = ResourceUtils.getFile("classpath:" + "hadoop/urls.txt");
+			br = new BufferedReader(new FileReader(file)); // creates a buffering character input stream
+			String line;
+			while ((line = br.readLine()) != null) {
+				byte[] decodedBytes = Base64.getDecoder().decode(line);
+				String url = new String(decodedBytes);
+				String decodedUrl = URLDecoder.decode(url, StandardCharsets.UTF_8.toString());
+				byte[] encodedhash = DIGEST.digest(decodedUrl.getBytes(StandardCharsets.UTF_8));
+				String key = bytesToHex(encodedhash);
+				URLS_MAP.put(key, decodedUrl);
+			}
+
+		} finally {
+			if (br != null) {
+				br.close();
+			}
+		}
+	}
 
 	public PriorityQueue<DocumentDto> searchByContent(String content, int howMany) {
 		PriorityQueue<DocumentDto> topDocs = new PriorityQueue<>();
@@ -159,6 +191,18 @@ public class HadoopSearch {
 			CACHE.remove(id);
 		}
 
+	}
+
+	private static String bytesToHex(byte[] hash) {
+		StringBuilder hexString = new StringBuilder(2 * hash.length);
+		for (int i = 0; i < hash.length; i++) {
+			String hex = Integer.toHexString(0xff & hash[i]);
+			if (hex.length() == 1) {
+				hexString.append('0');
+			}
+			hexString.append(hex);
+		}
+		return hexString.toString();
 	}
 
 }

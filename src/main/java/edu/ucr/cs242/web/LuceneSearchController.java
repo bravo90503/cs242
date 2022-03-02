@@ -73,7 +73,7 @@ public class LuceneSearchController {
 
 	@GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-		InputStream in = getClass().getResourceAsStream("/lucene/documents/" + id);
+		InputStream in = getClass().getResourceAsStream("/documents/" + id);
 		return IOUtils.toByteArray(in);
 	}
 }
