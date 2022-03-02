@@ -33,6 +33,7 @@ public class HadoopSearch {
 		PriorityQueue<DocumentDto> topDocs = new PriorityQueue<>();
 		try {
 			List<Keyword> keywords = getKeywords(content.split(" "));
+			findTopDocuments(keywords, howMany, topDocs);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
