@@ -130,7 +130,7 @@ public class HadoopSearch {
 	public int findTopDocuments(List<Keyword> keywords, int howMany, PriorityQueue<DocumentDto> topDocs) {
 		Document[] iterationDocs = new Document[keywords.size()];
 		Map<String, DocumentDto> CACHE = new LinkedHashMap<>();
-		boolean done = false;
+
 		int iteration = 0;
 		for (;;) {
 			// next iteration documents
@@ -141,28 +141,22 @@ public class HadoopSearch {
 					document = keyword.getDocuments().get(iteration);
 				}
 				if (document == null) {
-					done = true;
-					break;
+					return iteration;
 				}
 
 				iterationDocs[i] = document;
 				i++;
 			}
 
-			if (done) {
-				break;
-			}
-
 			rankDocuments(iterationDocs, CACHE, topDocs);
 
 			if (topDocs.size() >= howMany) {
-				break;
+				return iteration;
 			}
 
 			iteration++;
 		}
 
-		return iteration;
 	}
 
 	/**
