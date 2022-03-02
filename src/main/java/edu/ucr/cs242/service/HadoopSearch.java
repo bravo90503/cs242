@@ -132,11 +132,15 @@ public class HadoopSearch {
 			// next iteration documents
 			int i = 0;
 			for (Keyword keyword : keywords) {
-				Document document = keyword.getDocuments().get(iteration);
+				Document document = null;
+				if (iteration < keyword.getDocuments().size()) {
+					document = keyword.getDocuments().get(iteration);
+				}
 				if (document == null) {
 					done = true;
 					break;
 				}
+
 				iterationDocs[i] = document;
 				i++;
 			}
@@ -166,7 +170,9 @@ public class HadoopSearch {
 	 * @param CACHE   buffer to keep track of visited documents
 	 * @param topDocs list to put top documents in
 	 * @return nothing, uses topDocs in param to put results in
-	 * @see <a href="http://www-db.deis.unibo.it/courses/SI-M/slides/01.2.TopK.advanced1.pdf">Top-k queries</a>
+	 * @see <a href=
+	 *      "http://www-db.deis.unibo.it/courses/SI-M/slides/01.2.TopK.advanced1.pdf">Top-k
+	 *      queries</a>
 	 * @since 1.0
 	 */
 	public void rankDocuments(Document[] iDocs, Map<String, DocumentDto> CACHE, PriorityQueue<DocumentDto> topDocs) {
