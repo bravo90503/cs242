@@ -39,7 +39,7 @@ public class HadoopSearchController {
 		query.setHowMany(10);
 		model.addAttribute("search", query);
 
-		return "hadoop-query";
+		return "hadoop-query-gz";
 	}
 
 	@PostMapping("/search")
@@ -66,7 +66,7 @@ public class HadoopSearchController {
 			e.printStackTrace();
 		}
 
-		return "hadoop-results";
+		return "hadoop-results-gz";
 	}
 
 	@GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
