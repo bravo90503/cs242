@@ -16,19 +16,21 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 public class HadoopSearch {
 
 	public int findTopDocuments(List<Keyword> keywords, int howMany, PriorityQueue<DocumentDto> topDocs) {
-		List<Document> iterationDocs = new ArrayList<Document>();
+		Document[] iterationDocs = new Document[keywords.size()];
 		Map<String, DocumentDto> CACHE = new LinkedHashMap<>();
 		boolean done = false;
 		int iteration = 0;
 		for (;;) {
 			// next iteration documents
+			int i = 0;
 			for (Keyword keyword : keywords) {
 				Document document = keyword.getDocuments().poll();
 				if (document == null) {
 					done = true;
 					break;
 				}
-				iterationDocs.add(document);
+				iterationDocs[i] = document;
+				i++;
 			}
 
 			if (done) {
@@ -42,17 +44,15 @@ public class HadoopSearch {
 			}
 
 			iteration++;
-			iterationDocs.clear();
 		}
 
 		return iteration;
 	}
 
-	public void rankDocuments(List<Document> iDocs, Map<String, DocumentDto> CACHE,
-			PriorityQueue<DocumentDto> topDocs) {
+	public void rankDocuments(Document[] iDocs, Map<String, DocumentDto> CACHE, PriorityQueue<DocumentDto> topDocs) {
 		// cache incoming docs, set lowerbounds on their respective indices
 		int k = 0;
-		int length = iDocs.size();
+		int length = iDocs.length;
 		for (Document iDoc : iDocs) {
 			DocumentDto cached = CACHE.get(iDoc.getDocId());
 			if (cached == null) {
@@ -77,7 +77,7 @@ public class HadoopSearch {
 			double upperBound = 0.0;
 			for (int i = 0; i < length; i++) {
 				lowerBound += cached.getMins()[i];
-				upperBound += iDocs.get(i).getScore();
+				upperBound += iDocs[i].getScore();
 			}
 			cached.setMin(lowerBound);
 			cached.setMax(upperBound);
