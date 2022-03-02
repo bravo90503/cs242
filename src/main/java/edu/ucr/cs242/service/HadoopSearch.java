@@ -66,7 +66,9 @@ public class HadoopSearch {
 		PriorityQueue<DocumentDto> topDocs = new PriorityQueue<>();
 		try {
 			List<Keyword> keywords = getKeywords(content.split(" "));
-			findTopDocuments(keywords, howMany, topDocs);
+			if (keywords.size() > 0) {
+				findTopDocuments(keywords, howMany, topDocs);
+			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -113,10 +115,12 @@ public class HadoopSearch {
 			buffered.close(); // closes the stream and release the resources
 
 			for (int i = 0; i < keys.length; i++) {
-				Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
-				keyword.setKey(keys[i].toString());
-				keywords.add(keyword);
-				keywordsMap.put(keys[i].toString(), keyword);
+				if (docs[i] != null) {
+					Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
+					keyword.setKey(keys[i].toString());
+					keywords.add(keyword);
+					keywordsMap.put(keys[i].toString(), keyword);
+				}
 			}
 		}
 
