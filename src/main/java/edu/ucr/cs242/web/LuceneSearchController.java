@@ -47,7 +47,7 @@ public class LuceneSearchController {
 			String content = query.getContent();
 
 			TopDocs foundDocs3 = luceneSearchService.searchByContent(content, howMany);
-			List<edu.ucr.cs242.web.dto.Document> documents = new ArrayList<>();
+			List<edu.ucr.cs242.web.dto.DocumentDto> documents = new ArrayList<>();
 			for (ScoreDoc sd : foundDocs3.scoreDocs) {
 
 				Document d = luceneSearchService.getSearcher().doc(sd.doc);
@@ -57,7 +57,7 @@ public class LuceneSearchController {
 				String preview = d.get("preview");
 
 				System.out.println(++counter + ". Url=" + url + ", DocID=" + id);
-				documents.add(new edu.ucr.cs242.web.dto.Document(id, preview, url));
+				documents.add(new edu.ucr.cs242.web.dto.DocumentDto(id, preview, url));
 				System.out.println(d);
 				System.out.println(preview + "...");
 			}
