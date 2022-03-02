@@ -60,6 +60,7 @@ public class HadoopSearchController {
 				sortedDoc.setUrl(url);
 			}
 
+			model.addAttribute("query", query);
 			model.addAttribute("documents", documents);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
