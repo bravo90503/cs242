@@ -85,7 +85,9 @@ public class HadoopSearch {
 			if ((keyword = keywordsMap.get(token)) == null) {
 				tokenMap.put(token, token);
 			} else {
-				keywords.add(keyword);
+				if (StringUtils.isNotBlank(keyword.getKey())) {
+					keywords.add(keyword);
+				} // else keyword not found in file
 			}
 		}
 		if (!tokenMap.isEmpty()) {
@@ -120,6 +122,8 @@ public class HadoopSearch {
 					keyword.setKey(keys[i].toString());
 					keywords.add(keyword);
 					keywordsMap.put(keys[i].toString(), keyword);
+				} else {
+					keywordsMap.put(tokens[i].toString(), new Keyword());
 				}
 			}
 		}
