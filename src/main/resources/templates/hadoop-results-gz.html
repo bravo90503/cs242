@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="main.css">
 <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
 <style>
-.max-td {
+.truncate-url {
   max-width:600px; /* Customise it accordingly */
   white-space: normal;
   overflow: hidden;
@@ -28,14 +28,16 @@
 						<th scope="col">Doc Id</th>
 						<th scope="col">Doc url</th>
 						<th scope="col">Doc Preview</th>
+						<th scope="col">Score</th>
 					</tr>
 				</thead>
 				<tbody>
 					<tr th:each="document, iter : ${documents}" >
 					    <th scope="row" th:text="${iter.index + 1}"></th>
 						<td class="col-1"><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
-						<td class="max-td"><a th:href="${document.url}" target="_blank" rel="noopener"><span th:text="${document.url}"></span></a></td>
-						<td class="col-10" th:text="${document.preview}"></td>
+						<td class="truncate-url"><a th:href="${document.url}" target="_blank" rel="noopener"><span th:text="${document.url}"></span></a></td>
+						<td class="col-9" th:text="${document.preview}"></td>
+						<td class="col-1" th:text="${document.score}"></td>
 					</tr>
 				</tbody>
 			</table>

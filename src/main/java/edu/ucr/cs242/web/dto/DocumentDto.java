@@ -1,5 +1,7 @@
 package edu.ucr.cs242.web.dto;
 
+import java.text.DecimalFormat;
+
 public class DocumentDto implements Comparable<DocumentDto> {
 	private String id;
 	private String preview;
@@ -92,6 +94,12 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		sb.append("id=").append(id).append(";score=").append(min);
 
 		return sb.toString();
+	}
+
+	public String getScore() {
+		String pattern = "######.0000";
+		DecimalFormat df = new DecimalFormat(pattern);
+		return df.format(this.min);
 	}
 
 }
