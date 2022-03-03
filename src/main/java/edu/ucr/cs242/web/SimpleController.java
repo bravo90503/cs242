@@ -54,7 +54,7 @@ public class SimpleController {
 	public String read(Model model, User param) {
 		if (param.getId() != null) {
 			Optional<User> user = userRepository.findById(param.getId());
-			if (user.isPresent()) {
+			if (user != null && user.isPresent()) {
 				String userId = user.get().getId();
 				model.addAttribute("userId", userId);
 			}

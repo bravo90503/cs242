@@ -2,6 +2,7 @@ package edu.ucr.cs242;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
 import com.mongodb.ConnectionString;
@@ -10,6 +11,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
 
 @Configuration
+@Profile("mongo")
 public class MongoConfig {
 	@Bean
 	public MongoClient mongoClient() {
