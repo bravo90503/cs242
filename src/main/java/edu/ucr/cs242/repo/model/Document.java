@@ -49,5 +49,12 @@ public class Document implements Comparable<Document> {
 			return -1;
 		return 0;
 	}
+	
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("score=").append(score);
+		sb.append("\nid=").append(docId);
+		return sb.toString();
+	}
 
 }

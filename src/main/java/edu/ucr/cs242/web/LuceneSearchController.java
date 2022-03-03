@@ -47,7 +47,7 @@ public class LuceneSearchController {
 			String content = query.getContent();
 
 			TopDocs foundDocs3 = luceneSearchService.searchByContent(content, howMany);
-			List<edu.ucr.cs242.web.dto.Document> documents = new ArrayList<>();
+			List<edu.ucr.cs242.web.dto.DocumentDto> documents = new ArrayList<>();
 			for (ScoreDoc sd : foundDocs3.scoreDocs) {
 
 				Document d = luceneSearchService.getSearcher().doc(sd.doc);
@@ -57,7 +57,7 @@ public class LuceneSearchController {
 				String preview = d.get("preview");
 
 				System.out.println(++counter + ". Url=" + url + ", DocID=" + id);
-				documents.add(new edu.ucr.cs242.web.dto.Document(id, preview, url));
+				documents.add(new edu.ucr.cs242.web.dto.DocumentDto(id, preview, url));
 				System.out.println(d);
 				System.out.println(preview + "...");
 			}
@@ -73,7 +73,7 @@ public class LuceneSearchController {
 
 	@GetMapping(value = "/document/{id}", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE)
 	public @ResponseBody byte[] getFile(@PathVariable String id) throws IOException {
-		InputStream in = getClass().getResourceAsStream("/lucene/documents/" + id);
+		InputStream in = getClass().getResourceAsStream("/documents/" + id);
 		return IOUtils.toByteArray(in);
 	}
 }
