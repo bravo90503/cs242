@@ -155,7 +155,7 @@ public class HadoopSearch {
 				i++;
 			}
 
-			rankDocuments(iterationDocs, CACHE, topDocs);
+			rankDocuments(iterationDocs, CACHE, topDocs, howMany);
 
 			if (topDocs.size() >= howMany) {
 				return iteration;
@@ -180,10 +180,13 @@ public class HadoopSearch {
 	 *      queries</a>
 	 * @since 1.0
 	 */
-	public void rankDocuments(Document[] iDocs, Map<String, DocumentDto> CACHE, PriorityQueue<DocumentDto> topDocs) {
+	public void rankDocuments(Document[] iDocs, Map<String, DocumentDto> CACHE, PriorityQueue<DocumentDto> topDocs,
+			int howMany) {
+		int remaining = howMany - topDocs.size();
 		// cache incoming docs, set lowerbounds on their respective indices
 		int k = 0;
 		int length = iDocs.length;
+
 		for (Document iDoc : iDocs) {
 			DocumentDto cached = CACHE.get(iDoc.getDocId());
 			if (cached == null) {
@@ -203,6 +206,7 @@ public class HadoopSearch {
 
 		// finalize lower and upper bounds for buffered (cached) items
 		List<String> topDocsIds = new ArrayList<>();
+		int iteration = 0;
 		for (DocumentDto cached : CACHE.values()) {
 			double lowerBound = 0.0;
 			double upperBound = 0.0;
@@ -216,6 +220,17 @@ public class HadoopSearch {
 			if (lowerBound >= upperBound) {
 				topDocsIds.add(cached.getId());
 			}
+
+			if (topDocsIds.size() >= remaining) {
+				// early termination from having to look at entire cache
+				break;
+			}
+			iteration++;
+		}
+		
+		if (logger.isDebugEnabled()) {
+			int size = CACHE.size();
+			logger.debug(size + " vs " + iteration);
 		}
 
 		for (String id : topDocsIds) {
