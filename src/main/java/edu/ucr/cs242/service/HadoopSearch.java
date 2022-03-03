@@ -23,6 +23,8 @@ import java.util.zip.GZIPInputStream;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -34,6 +36,7 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 
 @Service
 public class HadoopSearch {
+	Logger logger = LoggerFactory.getLogger(HadoopSearch.class);
 	private static ObjectMapper mapper = new ObjectMapper();
 	public static Map<String, String> URLS_MAP = new HashMap<>();
 	private Map<String, Keyword> keywordsMap = new HashMap<>();
@@ -70,10 +73,10 @@ public class HadoopSearch {
 				findTopDocuments(keywords, howMany, topDocs);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("searchByContent", e);
 		}
 
+		logger.info("hadoop search completed");
 		return topDocs;
 	}
 
