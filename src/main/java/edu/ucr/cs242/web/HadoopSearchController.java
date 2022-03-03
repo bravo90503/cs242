@@ -8,8 +8,6 @@ import java.util.Map;
 import java.util.PriorityQueue;
 
 import org.apache.commons.io.IOUtils;
-import org.apache.lucene.document.Document;
-import org.apache.lucene.search.ScoreDoc;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
