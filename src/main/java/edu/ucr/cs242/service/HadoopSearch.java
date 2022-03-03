@@ -65,7 +65,7 @@ public class HadoopSearch {
 	public PriorityQueue<DocumentDto> searchByContent(String content, int howMany) {
 		PriorityQueue<DocumentDto> topDocs = new PriorityQueue<>();
 		try {
-			List<Keyword> keywords = getKeywords(content.split(" "));
+			List<Keyword> keywords = getKeywords(content.toLowerCase().split(" "));
 			if (keywords.size() > 0) {
 				findTopDocuments(keywords, howMany, topDocs);
 			}
