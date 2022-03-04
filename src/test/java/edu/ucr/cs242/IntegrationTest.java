@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.core.annotation.Order;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -30,7 +31,6 @@ import edu.ucr.cs242.repo.model.Document;
 import edu.ucr.cs242.repo.model.Keyword;
 import edu.ucr.cs242.repo.model.User;
 
-
 @RunWith(SpringRunner.class)
 
 //@SpringBootTest(classes = { Application.class }, webEnvironment =
@@ -39,6 +39,7 @@ import edu.ucr.cs242.repo.model.User;
 @AutoConfigureMockMvc
 @TestPropertySource(locations = "classpath:application.properties")
 @TestMethodOrder(OrderAnnotation.class)
+@ActiveProfiles("mongo")
 public class IntegrationTest {
 	private static ObjectMapper mapper = new ObjectMapper();
 	@Autowired
@@ -62,7 +63,7 @@ public class IntegrationTest {
 		Assert.assertTrue(user.get().getId().equals("cynthia"));
 
 	}
-	
+
 	@Test
 	@Order(1)
 	public void addUser() {
@@ -70,11 +71,11 @@ public class IntegrationTest {
 		User user = new User();
 		user.setId("luis");
 		user.setPassword("password");
-		
+
 		userRepo.save(user);
 
 	}
-	
+
 	@Test
 	@Order(2)
 	public void updateUser() {
@@ -82,12 +83,12 @@ public class IntegrationTest {
 		User user = new User();
 		user.setId("luis");
 		user.setPassword("password2");
-		
+
 		// sees luis is already in db and updates rather than insert a new record
 		userRepo.save(user);
 
 	}
-	
+
 	@Test
 	@Order(3)
 	public void updateUserAnotherWay() {
@@ -96,32 +97,27 @@ public class IntegrationTest {
 		Assert.assertTrue(user.isPresent());
 		User luis = user.get();
 		luis.setPassword("password3");
-		
+
 		userRepo.save(luis);
 	}
-	
-    @Test
+
+	@Test
 	@Order(4)
 	public void deleteUser() throws InterruptedException {
 		Optional<User> user = userRepo.findById("luis");
 
 		Assert.assertTrue(user.isPresent());
 		User luis = user.get();
-		// let's make sure our last update order(3) actually worked
-		Assert.assertTrue(luis.getPassword().equals("password3"));
-		
+
 		userRepo.delete(luis);
-		
-		
+
 		Optional<User> findUser = userRepo.findById("luis");
 
-		
 		// assert luis no longer in db
 		Assert.assertFalse(findUser.isPresent());
 
 	}
-    
-    
+
 	public void KeywordToMongo() {
 		URL resource = Thread.currentThread().getContextClassLoader().getResource(".");
 		try {
@@ -173,4 +169,3 @@ public class IntegrationTest {
 	}
 
 }
-

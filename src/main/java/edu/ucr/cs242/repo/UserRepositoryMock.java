@@ -3,6 +3,7 @@ package edu.ucr.cs242.repo;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.context.annotation.Profile;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +12,8 @@ import org.springframework.stereotype.Repository;
 
 import edu.ucr.cs242.repo.model.User;
 
-//@Repository
+@Repository
+@Profile("!mongo")
 public class UserRepositoryMock implements UserRepository {
 
 	@Override
@@ -95,31 +97,31 @@ public class UserRepositoryMock implements UserRepository {
 	@Override
 	public void deleteById(String id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void delete(User entity) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAllById(Iterable<? extends String> ids) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll(Iterable<? extends User> entities) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void deleteAll() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
