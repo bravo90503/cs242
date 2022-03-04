@@ -66,4 +66,9 @@ public class SimpleController {
 		}
 		return "read";
 	}
+	
+	@GetMapping(value = "/about") 
+	public String about(User user){
+		return "about";
+	}
 }

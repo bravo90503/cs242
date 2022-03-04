@@ -21,7 +21,10 @@
 }
 </style>
 </head>
-<body >
+  <body>
+
+  <!-- START: header -->
+
   <header role="banner" class="probootstrap-header">
     <div class="container">
         <a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
@@ -32,37 +35,31 @@
         <nav role="navigation" class="probootstrap-nav hidden-xs">
           <ul class="probootstrap-main-nav">
           	<li class="active"><a href="/">Home</a></li>
-            <li class="active"><a href="/about">About</a></li>
           </ul>
           
         </nav>
     </div>
   </header>
-	<div class="container-fluid pt-10">
-		<div class="row">
-			<div class="container d-flex align-items-center justify-content-center"><h1>Lucene Search Results</h1></div>
+  <!-- END: header -->
 
-			<table class="table">
-				<thead>
-					<tr>
-					   <th scope="col">#</th>
-						<th scope="col">Doc Id</th>
-						<th scope="col">Doc url</th>
-						<th scope="col">Doc Preview</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="document, iter : ${documents}" >
-					    <th scope="row" th:text="${iter.index + 1}"></th>
-						<td class="col-1"><a th:href="@{/lucene/document/{id}(id=${document.id})}"><span th:text="${document.shortId}"></span></a></td>
-						<td class="max-td"><a th:href="${document.url}" target="_blank" rel="noopener"><span th:text="${document.url}"></span></a></td>
-						<td class="col-10" th:text="${document.preview}"></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</div>
-	  <footer class="probootstrap-footer" role="contentinfo">
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-7 col-md-push-5">
+          <h2>Final Credits</h2>
+         <p> Shirin Afshar
+         <p> Cynthia Wen
+         <p> Marlon Bravo
+         <p> Phl Campbell
+         <p> Luis Hernandez
+         <p> Rameshh Subramaniam
+           </div>
+      </div>
+    </div>
+  </section>
+  <!-- END section -->
+
+  <footer class="probootstrap-footer" role="contentinfo">
     <div class="container">
       <div class="row">
         <div class="col-md-12">
@@ -77,5 +74,14 @@
       </div>
     </div>
   </footer>
-</body>
+
+  <div class="gototop js-top">
+    <a href="#" class="js-gotop"><i class="icon-chevron-thin-up"></i></a>
+  </div>
+  
+
+  <script src="js/scripts.min.js"></script>
+  <script src="js/main.min.js"></script>
+  <script src="js/custom.js"></script>
+  </body>
 </html>
