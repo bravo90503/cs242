@@ -44,6 +44,11 @@ public class SimpleController {
 		return "find";
 	}
 	
+	@GetMapping(value = "/advanced") 
+	public String advance(User user){
+		return "advanced";
+	}
+	
 	@PostMapping(value = "/finduser")
 	public String findUser(User user, RedirectAttributes redir) {
 		redir.addFlashAttribute(user);

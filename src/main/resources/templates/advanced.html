@@ -4,7 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content-width="device-width", initial-scale="1.0">
     <title>Advanced Search Engine</title>
-    <link rel="stylesheet" href="main.css">
+    <link rel="stylesheet" href="/main.css">
+        <link th:rel="stylesheet"
+	th:href="@{/webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} " />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
 </head>
 <body class="main-theme">
     <!--Main title heading-->
@@ -23,7 +27,7 @@
     </form>
     </center>
     <br>
-    <center><button type="button">Find matches!</button></center>
+    <center><button class="btn btn-default" type="button">Find matches!</button></center>
     <script src="interact_web.js"></script>
     <noscript>You need to enable Javascript to view the full site.</noscript>
 </body>

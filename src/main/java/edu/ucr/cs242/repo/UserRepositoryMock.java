@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import edu.ucr.cs242.repo.model.User;
 
-@Repository
+//@Repository
 public class UserRepositoryMock implements UserRepository {
 
 	@Override
