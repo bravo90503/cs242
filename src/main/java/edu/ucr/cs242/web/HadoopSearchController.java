@@ -33,8 +33,8 @@ public class HadoopSearchController {
 	@GetMapping("/query")
 	public String query(Model model) {
 		LuceneQuery query = new LuceneQuery();
-		query.setContent("retrieval");
-		query.setHowMany(10);
+		query.setContent("information retrieval");
+		query.setHowMany(100);
 		model.addAttribute("search", query);
 
 		return "hadoop-query-gz";
