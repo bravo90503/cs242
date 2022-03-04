@@ -100,8 +100,8 @@ public class HadoopSearch {
 			GZIPInputStream gzipstream = new GZIPInputStream(stream);
 			Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
 			BufferedReader buffered = new BufferedReader(decoder);
-			StringBuilder[] keys = new StringBuilder[tokens.length];
-			StringBuilder[] docs = new StringBuilder[tokens.length];
+			StringBuilder[] keys = new StringBuilder[tokenMap.size()];
+			StringBuilder[] docs = new StringBuilder[tokenMap.size()];
 			String line;
 			int index = 0;
 			while ((line = buffered.readLine()) != null) {
