@@ -1,81 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content-width="device-width", initial-scale="1.0">
-    <title>Search Engine</title>		
-    <link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    <link rel="stylesheet" href="/explorer/css/styles-merged.css">
-    <link rel="stylesheet" href="/explorer/css/style.min.css">
-    <link rel="stylesheet" href="/explorer/css/custom.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+<meta charset="UTF-8">
+<meta name="viewport" content-width="device-width" , initial-scale="1.0">
+<title>Search Engine</title>
+
+<link href="https://fonts.googleapis.com/css?family=Abel"
 	rel="stylesheet">
-	
-			<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    <link rel="stylesheet" href="/explorer/css/styles-merged.css">
-    <link rel="stylesheet" href="/explorer/css/style.min.css">
-    <link rel="stylesheet" href="/explorer/css/custom.css">
+<link rel="stylesheet" href="/explorer/css/styles-merged.css">
+<link rel="stylesheet" href="/explorer/css/style.min.css">
+<link rel="stylesheet" href="/explorer/css/custom.css">
 </head>
-<body class="h-100">
+<body>
 
-  <header role="banner" class="probootstrap-header">
-    <div class="container">
-        <a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
-        
-        <a href="#" class="probootstrap-burger-menu visible-xs" ><i>Menu</i></a>
-        <div class="mobile-menu-overlay"></div>
+	<header role="banner" class="probootstrap-header">
+		<div class="container">
+			<a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
 
-        <nav role="navigation" class="probootstrap-nav hidden-xs">
-          <ul class="probootstrap-main-nav">
-            <li class="active"><a href="/about">About</a></li>
-          </ul>
-          
-        </nav>
-    </div>
-  </header>
-  <div class="container">
-    <!--Main title heading-->
-    <center><h1>Welcome to Group 2's search engine!</h1></center>
-    <center>
-    <form action="/url" method="GET">
-        <p>Please enter your search below:</p>
-        <input type="text" placeholder="Search">
-    </form>
-    </center>
-    <br>
-    <center><button type="button" class="btn btn-primary">Find matches!</button></center>
-    <center><a href="/advanced">Advanced</a></center>
-    <script src="interact_web.js"></script>
-    <noscript>You need to enable Javascript to view the full site.</noscript>
-    <center>
-    <p>
-    Try MONGO <a href="/find">click here</a> 
-    
-        <p>
+			<a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+			<div class="mobile-menu-overlay"></div>
 
-    Try LUCENE <a href="/lucene/query">click here</a> 
-    
-            <p>
-    Try HADOOP <a href="/hadoop/query">click here</a> 
-    </center>
-    </div>
-    
-    <br>
-      <footer class="probootstrap-footer" role="contentinfo">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <p class="probootstrap-copyright">&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a> All Rights Reserved.</p>
-          <ul class="probootstrap-social">
-            <li><a href="#"><i class="icon-twitter"></i></a></li>
-            <li><a href="#"><i class="icon-facebook2"></i></a></li>
-            <li><a href="#"><i class="icon-instagram2"></i></a></li>
-            <li><a href="#"><i class="icon-google-plus"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
+			<nav role="navigation" class="probootstrap-nav hidden-xs">
+				<ul class="probootstrap-main-nav">
+					<li class="active"><a href="/about">About</a></li>
+				</ul>
+
+			</nav>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="row ">
+			<div class="col text-center">
+				<!--Main title heading-->
+
+				<h2>Welcome to Group 2's search engine!</h2>
+
+
+				<form action="/url" method="GET">
+					<p>Please enter your search below:</p>
+					<input type="text" placeholder="Search">
+				</form>
+
+				<br>
+
+				<button type="button" class="btn btn-primary">Find matches!</button>
+
+				<p>
+					<a href="/advanced">Advanced</a>
+
+					<script src="interact_web.js"></script>
+				<noscript>You need to enable Javascript to view the full
+					site.</noscript>
+				<p>
+					Try MONGO <a href="/find">click here</a> <p>
+
+						Try LUCENE <a href="/lucene/query">click
+						here</a> 
+						<p>Try HADOOP
+				<a href="/hadoop/query">click here</a>
+				
+			</div>
+		</div>
+	</div>
+
+	<footer class="probootstrap-footer" role="contentinfo">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="probootstrap-copyright">
+						&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a>
+						All Rights Reserved.
+					</p>
+					<ul class="probootstrap-social">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook2"></i></a></li>
+						<li><a href="#"><i class="icon-instagram2"></i></a></li>
+						<li><a href="#"><i class="icon-google-plus"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
 
 </body>
 </html>
