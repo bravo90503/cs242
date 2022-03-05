@@ -32,7 +32,6 @@ public class LuceneSearchController {
 	@GetMapping("/query")
 	public String query(Model model) {
 		LuceneQuery query = new LuceneQuery();
-		query.setContent("retrieval");
 		query.setHowMany(10);
 		model.addAttribute("search", query);
 
