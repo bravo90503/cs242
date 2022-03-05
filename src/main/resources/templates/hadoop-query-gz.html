@@ -6,28 +6,29 @@
 <title>Search Engine</title>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    <link rel="stylesheet" href="/explorer/css/styles-merged.css">
-    <link rel="stylesheet" href="/explorer/css/style.min.css">
-    <link rel="stylesheet" href="/explorer/css/custom.css">
+<link href="https://fonts.googleapis.com/css?family=Abel"
+	rel="stylesheet">
+<link rel="stylesheet" href="/explorer/css/styles-merged.css">
+<link rel="stylesheet" href="/explorer/css/style.min.css">
+<link rel="stylesheet" href="/explorer/css/custom.css">
 </head>
 <body class="h-100">
-  <header role="banner" class="probootstrap-header">
-    <div class="container">
-        <a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
-        
-        <a href="#" class="probootstrap-burger-menu visible-xs" ><i>Menu</i></a>
-        <div class="mobile-menu-overlay"></div>
+	<header role="banner" class="probootstrap-header">
+		<div class="container">
+			<a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
 
-        <nav role="navigation" class="probootstrap-nav hidden-xs">
-          <ul class="probootstrap-main-nav">
-          	<li class="active"><a href="/">Home</a></li>
-            <li class="active"><a href="/about">About</a></li>
-          </ul>
-          
-        </nav>
-    </div>
-  </header>
+			<a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+			<div class="mobile-menu-overlay"></div>
+
+			<nav role="navigation" class="probootstrap-nav hidden-xs">
+				<ul class="probootstrap-main-nav">
+					<li class="active"><a href="/">Home</a></li>
+					<li class="active"><a href="/about">About</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+	
 	<div class="container h-50">
 		<div class="row h-100 justify-content-center align-items-center">
 			<div class="col-lg-8">
@@ -37,7 +38,7 @@
 				<form action="#" th:action="@{/hadoop/search}" th:object="${search}"
 					method="post">
 					<div class="form-group">
-						<label for="content">Keyword(s):</label> <input
+						<label for="content">Keyword(s):</label> <input autofocus
 							class="form-control" type="text" th:field="*{content}"
 							id="content" placeholder="Enter keyword(s)">
 					</div>
@@ -55,20 +56,23 @@
 			</div>
 		</div>
 	</div>
-	  <footer class="probootstrap-footer" role="contentinfo">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <p class="probootstrap-copyright">&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a> All Rights Reserved.</p>
-          <ul class="probootstrap-social">
-            <li><a href="#"><i class="icon-twitter"></i></a></li>
-            <li><a href="#"><i class="icon-facebook2"></i></a></li>
-            <li><a href="#"><i class="icon-instagram2"></i></a></li>
-            <li><a href="#"><i class="icon-google-plus"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
+	<footer class="probootstrap-footer" role="contentinfo">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="probootstrap-copyright">
+						&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a>
+						All Rights Reserved.
+					</p>
+					<ul class="probootstrap-social">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook2"></i></a></li>
+						<li><a href="#"><i class="icon-instagram2"></i></a></li>
+						<li><a href="#"><i class="icon-google-plus"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>

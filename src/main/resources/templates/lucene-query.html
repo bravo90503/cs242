@@ -38,7 +38,7 @@
 				<form action="#" th:action="@{/lucene/search}" th:object="${search}"
 					method="post">
 					<div class="form-group">
-						<label for="content">Keyword(s):</label> <input
+						<label for="content">Keyword(s):</label> <input autofocus
 							class="form-control" type="text" th:field="*{content}"
 							id="content" placeholder="Enter keyword(s)">
 					</div>
