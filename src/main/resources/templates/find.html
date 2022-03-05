@@ -14,29 +14,35 @@
 <link rel="stylesheet" href="/explorer/css/custom.css">
 </head>
 <body>
-  <header role="banner" class="probootstrap-header">
-    <div class="container">
-        <a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
-        
-        <a href="#" class="probootstrap-burger-menu visible-xs" ><i>Menu</i></a>
-        <div class="mobile-menu-overlay"></div>
+	<header role="banner" class="probootstrap-header">
+		<div class="container">
+			<a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
 
-        <nav role="navigation" class="probootstrap-nav hidden-xs">
-          <ul class="probootstrap-main-nav">
-          	<li class="active"><a href="/">Home</a></li>
-            <li class="active"><a href="/about">About</a></li>
-          </ul>
-          
-        </nav>
-    </div>
-  </header>
-	<p>
-	<form action="#" th:action="@{/finduser}" th:object="${user}"
-		method="post">
-		<label for="id">userId</label> <input type="text" th:field="*{id}"
-			id="id" placeholder="id">
-		<button type="submit" class="btn btn-primary">Find User</button>
-	</form>
+			<a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+			<div class="mobile-menu-overlay"></div>
+
+			<nav role="navigation" class="probootstrap-nav hidden-xs">
+				<ul class="probootstrap-main-nav">
+					<li class="active"><a href="/">Home</a></li>
+					<li class="active"><a href="/about">About</a></li>
+				</ul>
+
+			</nav>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<p>
+				<form action="#" th:action="@{/finduser}" th:object="${user}"
+					method="post">
+					<label for="id">userId</label> <input type="text" th:field="*{id}"
+						id="id" placeholder="id">
+					<button type="submit" class="btn btn-primary">Find User</button>
+				</form>
+			</div>
+		</div>
+	</div>
 	<footer class="probootstrap-footer" role="contentinfo">
 		<div class="container">
 			<div class="row">

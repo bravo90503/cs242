@@ -1,67 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content-width="device-width", initial-scale="1.0">
-    <title>Advanced Search Engine</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+<meta charset="UTF-8">
+<meta name="viewport" content-width="device-width" , initial-scale="1.0">
+<title>Advanced Search Engine</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
 	rel="stylesheet">
-	
-		<link href="https://fonts.googleapis.com/css?family=Abel" rel="stylesheet">
-    <link rel="stylesheet" href="/explorer/css/styles-merged.css">
-    <link rel="stylesheet" href="/explorer/css/style.min.css">
-    <link rel="stylesheet" href="/explorer/css/custom.css">
-</head>
-<body >
-  <header role="banner" class="probootstrap-header">
-    <div class="container">
-        <a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
-        
-        <a href="#" class="probootstrap-burger-menu visible-xs" ><i>Menu</i></a>
-        <div class="mobile-menu-overlay"></div>
 
-        <nav role="navigation" class="probootstrap-nav hidden-xs">
-          <ul class="probootstrap-main-nav">
-          	<li class="active"><a href="/">Home</a></li>
-            <li class="active"><a href="/about">About</a></li>
-          </ul>
-          
-        </nav>
-    </div>
-  </header>
-    <!--Main title heading-->
-    <center><h2>Advanced search engine options - Group 2</h2></center>
-    <center>
-    <form action="/url" method="GET">
-        <p>Please enter your search below:</p>
-        <input type="text" placeholder="Search">
-        <br><br>
-		<input type="checkbox" id="vehicle1" name="vehicle1" value="keyword">
-		<label for="vehicle1">Keyword</label><br>
-		<input type="checkbox" id="vehicle2" name="vehicle2" value="full search">
-		<label for="vehicle2">Full Search</label><br>
-		<input type="checkbox" id="vehicle3" name="vehicle3" value="partial search">
-		<label for="vehicle3">Partial Search</label><br><br>
-    </form>
-    </center>
-    <br>
-    <center><button class="btn btn-primary" type="button">Find matches!</button></center>
-    <script src="interact_web.js"></script>
-    <noscript>You need to enable Javascript to view the full site.</noscript>
-      <footer class="probootstrap-footer" role="contentinfo">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <p class="probootstrap-copyright">&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a> All Rights Reserved.</p>
-          <ul class="probootstrap-social">
-            <li><a href="#"><i class="icon-twitter"></i></a></li>
-            <li><a href="#"><i class="icon-facebook2"></i></a></li>
-            <li><a href="#"><i class="icon-instagram2"></i></a></li>
-            <li><a href="#"><i class="icon-google-plus"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </footer>
+<link href="https://fonts.googleapis.com/css?family=Abel"
+	rel="stylesheet">
+<link rel="stylesheet" href="/explorer/css/styles-merged.css">
+<link rel="stylesheet" href="/explorer/css/style.min.css">
+<link rel="stylesheet" href="/explorer/css/custom.css">
+</head>
+<body>
+	<header role="banner" class="probootstrap-header">
+		<div class="container">
+			<a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
+
+			<a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+			<div class="mobile-menu-overlay"></div>
+
+			<nav role="navigation" class="probootstrap-nav hidden-xs">
+				<ul class="probootstrap-main-nav">
+					<li class="active"><a href="/">Home</a></li>
+					<li class="active"><a href="/about">About</a></li>
+				</ul>
+
+			</nav>
+		</div>
+	</header>
+	<div class="container">
+		<div class="row">
+			<div class="col">
+				<!--Main title heading-->
+				<center>
+					<h2>Advanced search engine options - Group 2</h2>
+				</center>
+				<center>
+					<form action="/url" method="GET">
+						<p>Please enter your search below:</p>
+						<input type="text" placeholder="Search"> <br>
+						<br> <input type="checkbox" id="vehicle1" name="vehicle1"
+							value="keyword"> <label for="vehicle1">Keyword</label><br>
+						<input type="checkbox" id="vehicle2" name="vehicle2"
+							value="full search"> <label for="vehicle2">Full
+							Search</label><br> <input type="checkbox" id="vehicle3"
+							name="vehicle3" value="partial search"> <label
+							for="vehicle3">Partial Search</label><br>
+						<br>
+					</form>
+				</center>
+				<br>
+				<center>
+					<button class="btn btn-primary" type="button">Find
+						matches!</button>
+				</center>
+				<script src="interact_web.js"></script>
+				<noscript>You need to enable Javascript to view the full
+					site.</noscript>
+
+
+			</div>
+		</div>
+	</div>
+
+
+	<footer class="probootstrap-footer" role="contentinfo">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="probootstrap-copyright">
+						&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a>
+						All Rights Reserved.
+					</p>
+					<ul class="probootstrap-social">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook2"></i></a></li>
+						<li><a href="#"><i class="icon-instagram2"></i></a></li>
+						<li><a href="#"><i class="icon-google-plus"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
 </body>
 </html>
