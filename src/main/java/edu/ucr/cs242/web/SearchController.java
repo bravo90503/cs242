@@ -12,6 +12,7 @@ import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.search.TopDocs;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,14 +35,14 @@ public class SearchController {
 	private HadoopSearch hadoopSearchService;
 	@Autowired
 	private LuceneSearch luceneSearchService;
-	
-	
-	
+	@Value("${search.how.many:25}")
+	private int searchHowMany;
+
 	@GetMapping("/")
 	public String query(Model model, Search search) {
 		Query query = new Query();
 		query.setSearchModel(SearchModel.LUCENE);
-		query.setHowMany(100);
+		query.setHowMany(searchHowMany);
 		model.addAttribute("query", query);
 		return "search-query";
 	}
