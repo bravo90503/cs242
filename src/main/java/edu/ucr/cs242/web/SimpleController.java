@@ -20,12 +20,6 @@ public class SimpleController {
 	@Value("${spring.application.name}")
 	private String appName;
 
-	@GetMapping("/")
-	public String homePage(Model model) {
-		model.addAttribute("appName", appName);
-		return "home";
-	}
-
 	@GetMapping(value = "/insert")
 	public String insert(User user) {
 

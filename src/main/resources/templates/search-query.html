@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en" class="h-100">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content-width="device-width" , initial-scale="1.0">
+<title>Search Engine</title>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+	rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Abel"
+	rel="stylesheet">
+<link rel="stylesheet" href="/explorer/css/styles-merged.css">
+<link rel="stylesheet" href="/explorer/css/style.min.css">
+<link rel="stylesheet" href="/explorer/css/custom.css">
+<style>
+.radio-padding {
+	padding-left: 5px;
+}
+</style>
+</head>
+<body class="h-100">
+	<header role="banner" class="probootstrap-header">
+		<div class="container">
+			<a href="/" class="probootstrap-logo">CS242 Final Project<span>.</span></a>
+
+			<a href="#" class="probootstrap-burger-menu visible-xs"><i>Menu</i></a>
+			<div class="mobile-menu-overlay"></div>
+
+			<nav role="navigation" class="probootstrap-nav hidden-xs">
+				<ul class="probootstrap-main-nav">
+					<li class="active"><a href="/">Home</a></li>
+					<li class="active"><a href="/about">About</a></li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+	<div class="container h-50">
+		<div class="row h-100 justify-content-center align-items-center">
+			<div class="col-lg-8">
+				<div class="row text-center">
+				    <h2>Welcome to Group 2's search engine!</h2>
+				</div>
+				<form action="#" th:action="@{/search}" th:object="${query}"
+					method="post">
+					<div class="form-group">
+						<label>Search Type</label>
+						<div>
+							<span class="radio-padding"
+								th:each="model : ${T(edu.ucr.cs242.web.dto.SearchModel).values()}">
+								<input type="radio" th:field="*{searchModel}"
+								th:value="${model}"> <label
+								th:for="${#ids.prev('searchModel')}" th:text="${model}"></label>
+							</span>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="content">Keyword(s):</label> <input autofocus
+							class="form-control" type="text" th:field="*{content}"
+							id="content" placeholder="Enter keyword(s)">
+					</div>
+					<div class="form-group">
+						<label for="howMany">How Many:</label> <input class="form-control"
+							type="text" th:field="*{howMany}" id="howMany"
+							placeholder="Enter how many documents to return">
+
+					</div>
+					<div class="form-group">
+						<button class="btn btn-primary" type="submit">Submit</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+	</div>
+	<footer class="probootstrap-footer" role="contentinfo">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<p class="probootstrap-copyright">
+						&copy; 2017 <a href="https://uicookies.com/">uiCookies:Explorer</a>
+						All Rights Reserved.
+					</p>
+					<ul class="probootstrap-social">
+						<li><a href="#"><i class="icon-twitter"></i></a></li>
+						<li><a href="#"><i class="icon-facebook2"></i></a></li>
+						<li><a href="#"><i class="icon-instagram2"></i></a></li>
+						<li><a href="#"><i class="icon-google-plus"></i></a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</footer>
+</body>
+</html>
