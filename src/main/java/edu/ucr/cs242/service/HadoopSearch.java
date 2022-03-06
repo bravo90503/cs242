@@ -12,6 +12,7 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -25,17 +26,25 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import edu.ucr.cs242.repo.KeywordRepository;
 import edu.ucr.cs242.repo.model.Document;
 import edu.ucr.cs242.repo.model.Keyword;
 import edu.ucr.cs242.web.dto.DocumentDto;
 
 @Service
 public class HadoopSearch {
+	@Autowired
+	KeywordRepository keywordRepo;
+	@Value("${enable.keyword.repo:true}")
+	boolean flag;
+	
 	Logger logger = LoggerFactory.getLogger(HadoopSearch.class);
 	private static ObjectMapper mapper = new ObjectMapper();
 	public static Map<String, String> URLS_MAP = new HashMap<>();
@@ -81,6 +90,10 @@ public class HadoopSearch {
 	}
 
 	public List<Keyword> getKeywords(String[] tokens) throws IOException {
+		if (flag) {
+			return keywordRepo.findByIds(Arrays.asList(tokens));
+		}
+			
 		List<Keyword> keywords = new ArrayList<>();
 		Map<String, String> tokenMap = new HashMap<>();
 		for (String token : tokens) {
