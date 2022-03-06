@@ -42,9 +42,9 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 public class HadoopSearch {
 	@Autowired
 	KeywordRepository keywordRepo;
-	@Value("${enable.keyword.repo:true}")
+	@Value("${enable.keyword.repo:false}")
 	boolean flag;
-	
+
 	Logger logger = LoggerFactory.getLogger(HadoopSearch.class);
 	private static ObjectMapper mapper = new ObjectMapper();
 	public static Map<String, String> URLS_MAP = new HashMap<>();
@@ -93,7 +93,7 @@ public class HadoopSearch {
 		if (flag) {
 			return keywordRepo.findByIds(Arrays.asList(tokens));
 		}
-			
+
 		List<Keyword> keywords = new ArrayList<>();
 		Map<String, String> tokenMap = new HashMap<>();
 		for (String token : tokens) {
@@ -260,6 +260,10 @@ public class HadoopSearch {
 
 	private double rankByDistance(DocumentDto cached) {
 		double additionalRank = 0.0;
+		// rank by distance is for two keywords or more
+		if (cached.getMins().length < 2) {
+			return additionalRank;
+		}
 		for (int i = 0; i < cached.getMins().length; i++) {
 			if (cached.getMins()[i] == null) {
 				return 0.00;
@@ -271,7 +275,7 @@ public class HadoopSearch {
 
 		boolean match = false;
 		boolean done = false;
-        double found = 0;
+		double found = 0;
 		for (;;) {
 			for (int i = 0; i < ptrs.length; i++) {
 				if (ptrs[i] > keywords[i].getPositions().length) {
@@ -319,7 +323,7 @@ public class HadoopSearch {
 
 			if (match) {
 				found++;
-				//break;
+				// break;
 			}
 
 			for (int l = 0; l < ptrs.length - 1; l++) {
