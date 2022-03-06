@@ -42,8 +42,8 @@ import edu.ucr.cs242.web.dto.DocumentDto;
 public class HadoopSearch {
 	@Autowired
 	KeywordRepository keywordRepo;
-	@Value("${enable.keyword.repo:false}")
-	boolean flag;
+	@Value("${spring.profiles.active}")
+	private String activeProfile;
 
 	Logger logger = LoggerFactory.getLogger(HadoopSearch.class);
 	private static ObjectMapper mapper = new ObjectMapper();
@@ -90,10 +90,6 @@ public class HadoopSearch {
 	}
 
 	public List<Keyword> getKeywords(String[] tokens) throws IOException {
-		if (flag) {
-			return keywordRepo.findByIds(Arrays.asList(tokens));
-		}
-
 		List<Keyword> keywords = new ArrayList<>();
 		Map<String, String> tokenMap = new HashMap<>();
 		for (String token : tokens) {
@@ -106,42 +102,58 @@ public class HadoopSearch {
 				} // else keyword not found in file
 			}
 		}
-		if (!tokenMap.isEmpty()) {
-			File file = ResourceUtils.getFile("classpath:" + "part-r-00000.gz");
-			FileInputStream stream = new FileInputStream(file); // creates a new file
-			// instance
-			GZIPInputStream gzipstream = new GZIPInputStream(stream);
-			Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
-			BufferedReader buffered = new BufferedReader(decoder);
-			StringBuilder[] keys = new StringBuilder[tokenMap.size()];
-			StringBuilder[] docs = new StringBuilder[tokenMap.size()];
-			String line;
-			int index = 0;
-			while ((line = buffered.readLine()) != null) {
-				int beginIndex = line.indexOf("{");
-				String key = line.substring(0, beginIndex).trim();
-				if (StringUtils.isNotBlank(key) && tokenMap.get(key) != null) {
-					StringBuilder keysb = new StringBuilder();
-					StringBuilder doc = new StringBuilder();
-					keysb.append(key); // appends line to string buffer
-					doc.append(line.substring(beginIndex, line.length()));
-					keys[index] = keysb;
-					docs[index] = doc;
-					index++;
-				}
-			}
-			buffered.close(); // closes the stream and release the resources
 
-			for (int i = 0; i < keys.length; i++) {
-				if (docs[i] != null) {
-					Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
-					keyword.setKey(keys[i].toString());
+		if (!tokenMap.isEmpty()) {
+			if ("mongo".equals(activeProfile)) {
+				List<String> mongoKeywords = new ArrayList<>(tokenMap.size());
+				for (String token : tokenMap.keySet()) {
+					mongoKeywords.add(token);
+				}
+				List<Keyword> repoKeywords = keywordRepo.findByIds(mongoKeywords);
+				for (Keyword keyword : repoKeywords) {
 					keywords.add(keyword);
-					keywordsMap.put(keys[i].toString(), keyword);
-				} else {
-					keywordsMap.put(tokens[i].toString(), new Keyword());
+					keywordsMap.put(keyword.getKey(), keyword);
+				}
+				// dont cache misses, db may update
+
+			} else {
+				File file = ResourceUtils.getFile("classpath:" + "part-r-00000.gz");
+				FileInputStream stream = new FileInputStream(file); // creates a new file
+				// instance
+				GZIPInputStream gzipstream = new GZIPInputStream(stream);
+				Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
+				BufferedReader buffered = new BufferedReader(decoder);
+				StringBuilder[] keys = new StringBuilder[tokenMap.size()];
+				StringBuilder[] docs = new StringBuilder[tokenMap.size()];
+				String line;
+				int index = 0;
+				while ((line = buffered.readLine()) != null) {
+					int beginIndex = line.indexOf("{");
+					String key = line.substring(0, beginIndex).trim();
+					if (StringUtils.isNotBlank(key) && tokenMap.get(key) != null) {
+						StringBuilder keysb = new StringBuilder();
+						StringBuilder doc = new StringBuilder();
+						keysb.append(key); // appends line to string buffer
+						doc.append(line.substring(beginIndex, line.length()));
+						keys[index] = keysb;
+						docs[index] = doc;
+						index++;
+					}
+				}
+				buffered.close(); // closes the stream and release the resources
+
+				for (int i = 0; i < keys.length; i++) {
+					if (docs[i] != null) {
+						Keyword keyword = mapper.readValue(docs[i].toString(), Keyword.class);
+						keyword.setKey(keys[i].toString());
+						keywords.add(keyword);
+						keywordsMap.put(keys[i].toString(), keyword);
+					} else {
+						keywordsMap.put(tokens[i].toString(), new Keyword());
+					}
 				}
 			}
+
 		}
 
 		return keywords;
