@@ -7,7 +7,7 @@ public class Document implements Comparable<Document> {
 	private String docId;
 	private double score;
 	private long positions[];
-	private String preview;
+	private String snippet;
 	private String keyword;
 
 	public String getDocId() {
@@ -34,12 +34,12 @@ public class Document implements Comparable<Document> {
 		this.positions = positions;
 	}
 
-	public String getPreview() {
-		return preview;
+	public String getSnippet() {
+		return snippet;
 	}
 
-	public void setPreview(String preview) {
-		this.preview = preview;
+	public void setSnippet(String snippet) {
+		this.snippet = snippet;
 	}
 
 	@Override
@@ -50,7 +50,7 @@ public class Document implements Comparable<Document> {
 			return -1;
 		return 0;
 	}
-	
+
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("score=").append(score);

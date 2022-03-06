@@ -207,6 +207,7 @@ public class HadoopSearch {
 				cached = new DocumentDto();
 				cached.setId(iDoc.getDocId());
 				cached.setMin(iDoc.getScore());
+				cached.setSnippet(iDoc.getSnippet());
 
 				DocumentDto.Keyword mins[] = new DocumentDto.Keyword[length];
 				mins[k] = new DocumentDto.Keyword(iDoc.getScore(), iDoc.getKeyword(), iDoc.getPositions());

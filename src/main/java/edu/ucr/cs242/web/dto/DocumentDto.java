@@ -1,10 +1,13 @@
 package edu.ucr.cs242.web.dto;
 
 import java.text.DecimalFormat;
+import java.util.Base64;
+
+import org.apache.commons.lang3.StringUtils;
 
 public class DocumentDto implements Comparable<DocumentDto> {
 	private String id;
-	private String preview;
+	private String snippet;
 	private String url;
 	private Keyword[] mins;
 	private double min;
@@ -47,9 +50,9 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		this.max = max;
 	}
 
-	public DocumentDto(String id, String preview, String url) {
+	public DocumentDto(String id, String snippet, String url) {
 		this.id = id;
-		this.preview = preview;
+		this.snippet = snippet;
 		this.url = url;
 	}
 
@@ -61,12 +64,12 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		this.id = id;
 	}
 
-	public String getPreview() {
-		return preview;
+	public String getSnippet() {
+		return snippet;
 	}
 
-	public void setPreview(String preview) {
-		this.preview = preview;
+	public void setSnippet(String snippet) {
+		this.snippet = snippet;
 	}
 
 	public String getUrl() {
@@ -109,6 +112,15 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		String pattern = "######.0000";
 		DecimalFormat df = new DecimalFormat(pattern);
 		return df.format(this.min);
+	}
+	
+	public String getDecodedSnippet() {
+		if (StringUtils.isNotBlank(this.snippet)) {
+			byte[] decodedBytes = Base64.getDecoder().decode(this.snippet);
+			return new String(decodedBytes);
+		}
+
+		return "";
 	}
 
 	public static class Keyword {
