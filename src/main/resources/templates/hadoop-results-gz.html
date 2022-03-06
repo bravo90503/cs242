@@ -24,6 +24,9 @@
 .search-results {
     padding-top: 30px !important;
 }
+.match {
+    color: red;
+}
 </style>
 </head>
 <body class="h-100">
@@ -73,7 +76,8 @@
 							target="_blank" rel="noopener"><span
 								th:text="${document.url}"></span></a></td>
 						<td class="col-9" th:text="${document.preview}"></td>
-						<td class="col-1" th:text="${document.score}"></td>
+						<td th:if="${document.match}" class="col-1 match" th:text="${document.score}"></td>
+						<td th:unless="${document.match}" class="col-1 " th:text="${document.score}"></td>
 					</tr>
 				</tbody>
 			</table>

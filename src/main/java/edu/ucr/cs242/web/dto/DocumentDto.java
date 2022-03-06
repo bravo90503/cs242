@@ -6,10 +6,11 @@ public class DocumentDto implements Comparable<DocumentDto> {
 	private String id;
 	private String preview;
 	private String url;
-	private double[] mins;
+	private Keyword[] mins;
 	private double min;
 	private double max;
 	private boolean found;
+	private boolean match;
 
 	public boolean isFound() {
 		return found;
@@ -30,11 +31,11 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		this.min = min;
 	}
 
-	public double[] getMins() {
+	public Keyword[] getMins() {
 		return mins;
 	}
 
-	public void setMins(double[] mins) {
+	public void setMins(Keyword[] mins) {
 		this.mins = mins;
 	}
 
@@ -80,6 +81,14 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		return this.id.substring(0, this.id.indexOf("_"));
 	}
 
+	public boolean isMatch() {
+		return match;
+	}
+
+	public void setMatch(boolean match) {
+		this.match = match;
+	}
+
 	@Override
 	public int compareTo(DocumentDto d2) {
 		if (min < d2.min)
@@ -100,6 +109,46 @@ public class DocumentDto implements Comparable<DocumentDto> {
 		String pattern = "######.0000";
 		DecimalFormat df = new DecimalFormat(pattern);
 		return df.format(this.min);
+	}
+
+	public static class Keyword {
+		public Keyword() {
+		}
+
+		public Keyword(double min, String keyword, long[] positions) {
+			this.min = min;
+			this.keyword = keyword;
+			this.positions = positions;
+		}
+
+		private double min;
+		private String keyword;
+		private long[] positions;
+
+		public double getMin() {
+			return min;
+		}
+
+		public void setMin(double min) {
+			this.min = min;
+		}
+
+		public String getKeyword() {
+			return keyword;
+		}
+
+		public void setKeyword(String keyword) {
+			this.keyword = keyword;
+		}
+
+		public long[] getPositions() {
+			return positions;
+		}
+
+		public void setPositions(long[] positions) {
+			this.positions = positions;
+		}
+
 	}
 
 }

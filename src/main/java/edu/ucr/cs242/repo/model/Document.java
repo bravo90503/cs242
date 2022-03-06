@@ -8,6 +8,7 @@ public class Document implements Comparable<Document> {
 	private double score;
 	private long positions[];
 	private String preview;
+	private String keyword;
 
 	public String getDocId() {
 		return docId;
@@ -55,6 +56,14 @@ public class Document implements Comparable<Document> {
 		sb.append("score=").append(score);
 		sb.append("\nid=").append(docId);
 		return sb.toString();
+	}
+
+	public String getKeyword() {
+		return keyword;
+	}
+
+	public void setKeyword(String keyword) {
+		this.keyword = keyword;
 	}
 
 }

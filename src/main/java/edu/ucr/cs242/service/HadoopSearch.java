@@ -151,6 +151,7 @@ public class HadoopSearch {
 					return iteration;
 				}
 
+				document.setKeyword(keyword.getKey());
 				iterationDocs[i] = document;
 				i++;
 			}
@@ -193,13 +194,13 @@ public class HadoopSearch {
 				cached = new DocumentDto();
 				cached.setId(iDoc.getDocId());
 				cached.setMin(iDoc.getScore());
-				double mins[] = new double[length];
-				mins[k] = iDoc.getScore();
+
+				DocumentDto.Keyword mins[] = new DocumentDto.Keyword[length];
+				mins[k] = new DocumentDto.Keyword(iDoc.getScore(), iDoc.getKeyword(), iDoc.getPositions());
 				cached.setMins(mins);
 				CACHE.put(iDoc.getDocId(), cached);
 			} else {
-				// previously cached, just update new index with incoming lowerbound
-				cached.getMins()[k] = iDoc.getScore();
+				cached.getMins()[k] = new DocumentDto.Keyword(iDoc.getScore(), iDoc.getKeyword(), iDoc.getPositions());
 			}
 			k++;
 		}
@@ -210,10 +211,14 @@ public class HadoopSearch {
 		for (DocumentDto cached : CACHE.values()) {
 			double lowerBound = 0.0;
 			double upperBound = 0.0;
+
 			for (int i = 0; i < length; i++) {
-				lowerBound += cached.getMins()[i];
+				lowerBound += cached.getMins()[i] == null ? 0 : cached.getMins()[i].getMin();
 				upperBound += iDocs[i].getScore();
 			}
+
+			lowerBound += lowerBound * rankByDistance(cached);
+
 			cached.setMin(lowerBound);
 			cached.setMax(upperBound);
 
@@ -227,7 +232,7 @@ public class HadoopSearch {
 			}
 			iteration++;
 		}
-		
+
 		if (logger.isDebugEnabled()) {
 			int size = CACHE.size();
 			logger.debug(size + " vs " + iteration);
@@ -238,6 +243,84 @@ public class HadoopSearch {
 			CACHE.remove(id);
 		}
 
+	}
+
+	private double rankByDistance(DocumentDto cached) {
+		double additionalRank = 0.0;
+		for (int i = 0; i < cached.getMins().length; i++) {
+			if (cached.getMins()[i] == null) {
+				return 0.00;
+			}
+		}
+
+		DocumentDto.Keyword[] keywords = cached.getMins();
+		int[] ptrs = new int[cached.getMins().length];
+
+		boolean match = false;
+		boolean done = false;
+        double found = 0;
+		for (;;) {
+			for (int i = 0; i < ptrs.length; i++) {
+				if (ptrs[i] > keywords[i].getPositions().length) {
+					done = true;
+					break;
+				}
+			}
+
+			if (done) {
+				break;
+			}
+
+			// advance 2nd, 3rd offsets?
+			long[] offsets = new long[ptrs.length];
+			boolean continueout = false;
+			for (int j = 0; j < ptrs.length; j++) {
+				if (ptrs[j] < keywords[j].getPositions().length) {
+					offsets[j] = keywords[j].getPositions()[ptrs[j]];
+					if (j == 0) {
+						continue;
+					}
+					long prevOffset = offsets[j - 1];
+					long curOffset = offsets[j];
+					int curOffsetLength = keywords[j].getKeyword().length() + 1;
+					if (prevOffset > curOffset + curOffsetLength) {
+						ptrs[j]++;
+						continueout = true;
+					}
+				}
+			}
+
+			if (continueout) {
+				continue;
+			}
+
+			// compare
+			long a = 0;
+			match = true;
+			for (int k = 0; k < ptrs.length - 1; k++) {
+				a = offsets[k] + keywords[k].getKeyword().length() + 1;
+				if (a != offsets[k + 1]) {
+					match = false;
+				}
+			}
+
+			if (match) {
+				found++;
+				//break;
+			}
+
+			for (int l = 0; l < ptrs.length - 1; l++) {
+				ptrs[l]++;
+			}
+
+		}
+
+		if (found > 0) {
+			cached.setMatch(true);
+			additionalRank = .50 * found;
+		}
+
+		return additionalRank;
 	}
 
 	private static String bytesToHex(byte[] hash) {
