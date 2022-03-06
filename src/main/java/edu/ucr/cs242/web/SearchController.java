@@ -18,7 +18,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.ucr.cs242.service.HadoopSearch;
@@ -112,6 +111,7 @@ public class SearchController {
 				System.out.println(preview + "...");
 			}
 
+			model.addAttribute("query", query);
 			model.addAttribute("documents", documents);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
