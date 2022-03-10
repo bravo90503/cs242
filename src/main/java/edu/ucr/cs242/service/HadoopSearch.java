@@ -3,7 +3,6 @@ package edu.ucr.cs242.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.Reader;
@@ -12,7 +11,6 @@ import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
@@ -28,7 +26,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.util.ResourceUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -55,11 +55,12 @@ public class HadoopSearch {
 		BufferedReader br = null;
 		try {
 			MessageDigest DIGEST = MessageDigest.getInstance("SHA-256");
-			File file = ResourceUtils.getFile("classpath:" + "hadoop/urls.txt");
-			br = new BufferedReader(new FileReader(file)); // creates a buffering character input stream
-			String line;
-			while ((line = br.readLine()) != null) {
-				byte[] decodedBytes = Base64.getDecoder().decode(line);
+			ClassPathResource cpr = new ClassPathResource("hadoop/urls.txt");
+			byte[] bdata = FileCopyUtils.copyToByteArray(cpr.getInputStream());
+		    String data = new String(bdata, StandardCharsets.UTF_8);
+		    String tokens[] = data.split("\n");
+			for (String token: tokens) {
+				byte[] decodedBytes = Base64.getDecoder().decode(token);
 				String url = new String(decodedBytes);
 				String decodedUrl = URLDecoder.decode(url, StandardCharsets.UTF_8.toString());
 				byte[] encodedhash = DIGEST.digest(decodedUrl.getBytes(StandardCharsets.UTF_8));
@@ -117,10 +118,9 @@ public class HadoopSearch {
 				// dont cache misses, db may update
 
 			} else {
-				File file = ResourceUtils.getFile("classpath:" + "part-r-00000.gz");
-				FileInputStream stream = new FileInputStream(file); // creates a new file
+				ClassPathResource cpr = new ClassPathResource("part-r-00000.gz");
 				// instance
-				GZIPInputStream gzipstream = new GZIPInputStream(stream);
+				GZIPInputStream gzipstream = new GZIPInputStream(cpr.getInputStream());
 				Reader decoder = new InputStreamReader(gzipstream, "UTF-8");
 				BufferedReader buffered = new BufferedReader(decoder);
 				StringBuilder[] keys = new StringBuilder[tokenMap.size()];
